@@ -19,13 +19,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#09090b] flex flex-col justify-center items-center p-4 transition-colors duration-500">
-      
-      {/* Background decorations */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -left-40 w-96 h-96 bg-green-500/20 rounded-full blur-[100px]" />
-        <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-blue-500/20 rounded-full blur-[100px]" />
-      </div>
+    <div className="min-h-screen relative flex flex-col justify-center items-center p-4 transition-colors duration-500 bg-transparent">
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}

@@ -5,6 +5,7 @@ import { motion } from 'motion/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Rocket, Moon, Sun, Download, Sparkles, LogIn, UserPlus } from 'lucide-react';
+import { ParticleBackground } from '@/components/ParticleBackground';
 
 export default function LandingPage() {
   const router = useRouter();
@@ -38,33 +39,6 @@ export default function LandingPage() {
       setTheme('light');
     }
   };
-
-  const [particles, setParticles] = useState<any[]>([]);
-  useEffect(() => {
-    if (!dimensions.width) return;
-    const p = [];
-    const colors = ['bg-blue-500', 'bg-red-400', 'bg-yellow-400', 'bg-purple-500', 'bg-green-400', 'bg-pink-400'];
-    const total = 100;
-    
-    for (let i = 0; i < total; i++) {
-      const t = i / total * Math.PI * 20; 
-      const radius = (i / total) * (Math.min(dimensions.width, dimensions.height) * 0.45);
-      const baseX = Math.cos(t) * radius;
-      const baseY = Math.sin(t) * radius;
-      
-      p.push({
-        id: i,
-        color: colors[Math.floor(Math.random() * colors.length)],
-        width: Math.random() * 4 + 2,
-        height: Math.random() * 8 + 3,
-        x: baseX,
-        y: baseY,
-        angle: Math.atan2(baseY, baseX) * (180 / Math.PI),
-        delay: Math.random() * 2,
-      });
-    }
-    setParticles(p);
-  }, [dimensions]);
 
   return (
     <div className="relative w-screen h-screen overflow-hidden bg-white dark:bg-[#09090b] text-gray-900 dark:text-gray-100 transition-colors duration-500 font-sans flex flex-col">
@@ -109,39 +83,8 @@ export default function LandingPage() {
         </div>
       </nav>
 
-      <div className="relative flex-1 flex flex-col justify-center items-center overflow-hidden">
-        <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
-          <motion.div 
-            className="relative"
-            animate={{ rotate: 360 }}
-            transition={{ duration: 150, repeat: Infinity, ease: "linear" }}
-          >
-            {particles.map((p) => (
-              <motion.div
-                key={p.id}
-                className={`absolute rounded-full ${p.color} opacity-70 dark:opacity-80`}
-                style={{
-                  width: p.width,
-                  height: p.height,
-                  left: p.x,
-                  top: p.y,
-                  transform: `rotate(${p.angle}deg)`,
-                }}
-                animate={{
-                  x: [0, Math.random() * 10 - 5, 0],
-                  y: [0, Math.random() * 10 - 5, 0],
-                  opacity: [0.3, 0.8, 0.3],
-                }}
-                transition={{
-                  duration: Math.random() * 3 + 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: p.delay
-                }}
-              />
-            ))}
-          </motion.div>
-        </div>
+      <div className="relative flex-1 flex flex-col justify-center items-center overflow-hidden z-10 w-full">
+        <ParticleBackground baseOpacity="opacity-70 dark:opacity-80" animateOpacity={[0.3, 0.8, 0.3]} />
 
         <div className="relative z-20 text-center px-4">
           <motion.div
