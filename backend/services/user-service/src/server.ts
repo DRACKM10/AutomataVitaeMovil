@@ -1,16 +1,21 @@
 import express from 'express';
+import cors from 'cors';
 import dotenv from 'dotenv';
+import authRoutes from './routes/auth.routes';
 import { pool } from './config/db';
 
+// Cargar variables de entorno de autenticación
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3005;
 
-// Middlewares globales
+app.use(cors({ origin: 'http://localhost:3000' }));
 app.use(express.json());
 
-// Endpoint de prueba de salud (Healthcheck)
+// Inyección de rutas del microservicio
+app.use('/api/v1/auth', authRoutes);
+
 app.get('/health', async (req, res) => {
     try {
         await pool.query('SELECT NOW()');
